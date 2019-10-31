@@ -1,13 +1,16 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: "Yannick"
+description: "Run a direwolf job"
+author: "Heroku"
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  jobId:
+    description: "Direwolf Job id"
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps 
-    description: 'The message to output'
+  direwolfToken:
+    description: "Direwolf token"
+    required: true
+  environment:
+    description: "run when environment is this"
+    required: true
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "lib/main.js"
