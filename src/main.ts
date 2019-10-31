@@ -5,7 +5,11 @@ import * as request from "request-promise-native";
 function createDirewolfRun(jobId: string, creator: string) {
   const direwolfToken = core.getInput("direwolfToken");
   const direwolfUrl = core.getInput("direwolfUrl");
-  return request.post(`https://${direwolfUrl}/jobs/${jobId}/runs`, {
+  core.warning(`Direwolf URL: ${direwolfUrl}`);
+  core.warning(`Direwolf Token: ${direwolfToken}`);
+  var url = `https://${direwolfUrl}/jobs/${jobId}/runs`;
+  core.warning(`Direwolf full: ${url}`);
+  return request.post(url, {
     auth: {
       user: direwolfToken,
       pass: "random"
