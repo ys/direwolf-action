@@ -5,6 +5,8 @@ inputs:
   jobId:
     description: "Direwolf Job id"
     required: true
+  direwolfUrl:
+    required: true
   direwolfToken:
     description: "Direwolf token"
     required: true

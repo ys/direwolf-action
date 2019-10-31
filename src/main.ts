@@ -2,12 +2,10 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as request from "request-promise-native";
 
-function createDirewolfRun(
-  jobId: string,
-  direwolfToken: string,
-  creator: string
-) {
-  return request.post(`https://direwolf-api.herokai.com/jobs/${jobId}/runs`, {
+function createDirewolfRun(jobId: string, creator: string) {
+  const direwolfToken = core.getInput("direwolfToken");
+  const direwolfUrl = core.getInput("direwolfUrl");
+  return request.post(`https://${direwolfUrl}/jobs/${jobId}/runs`, {
     auth: {
       user: direwolfToken,
       pass: "random"
@@ -21,7 +19,6 @@ function createDirewolfRun(
 
 async function run() {
   try {
-    const direwolfToken = core.getInput("direwolfToken");
     const jobId = core.getInput("jobId");
     const environment = core.getInput("environment");
     if (
@@ -30,11 +27,7 @@ async function run() {
       github.context.payload.deployment_status.environment == environment
     ) {
       // Create a Direwolf Run and comment on the PR
-      var body = await createDirewolfRun(
-        jobId,
-        direwolfToken,
-        github.context.actor
-      );
+      var body = await createDirewolfRun(jobId, github.context.actor);
       core.setOutput("direwolfRunId", body.id);
     }
   } catch (error) {
